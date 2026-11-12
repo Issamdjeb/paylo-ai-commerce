@@ -112,11 +112,13 @@ export async function ensurePayPalSandboxSubscriptionPlans(
         payment_preferences: { auto_bill_outstanding: true, setup_fee_failure_action: "CANCEL", payment_failure_threshold: 3 },
       });
       if (!created.ok || typeof created.data?.id !== "string" || !matchesExpectedPlan(created.data, plan)) continue;
-      validId = created.data.id;
-      cache.planIds[key] = validId;
+      const createdPlanId = created.data.id;
+      validId = createdPlanId;
+      cache.planIds[key] = createdPlanId;
       writeCache(cache);
     }
 
+    if (!validId) continue;
     planIds[key] = validId;
     ready.push(key);
   }

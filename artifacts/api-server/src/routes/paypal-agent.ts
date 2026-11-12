@@ -276,7 +276,11 @@ function createSimulatedInvoice(params: {
 // POST /api/paypal-agent/invoices/:id/send
 // -------------------------------------------------------------
 router.post("/paypal-agent/invoices/:id/send", requireAdmin, async (req: AuthenticatedRequest, res: Response) => {
-  const { id } = req.params;
+  const id = typeof req.params.id === "string" ? req.params.id : "";
+  if (!id) {
+    res.status(400).json({ error: "A single invoice ID is required." });
+    return;
+  }
   const invoices = loadInvoices();
   const index = invoices.findIndex((i) => i.id === id);
 
