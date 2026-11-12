@@ -1,0 +1,93 @@
+<svg viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="paPorcelain" cx="36%" cy="26%" r="80%">
+      <stop offset="0%" stop-color="#ffffff" />
+      <stop offset="25%" stop-color="#fbfcfe" />
+      <stop offset="55%" stop-color="#f1f5f9" />
+      <stop offset="78%" stop-color="#e2e8f0" />
+      <stop offset="92%" stop-color="#cbd5e1" />
+      <stop offset="100%" stop-color="#94a3b8" />
+    </radialGradient>
+    <radialGradient id="paSSS" cx="50%" cy="85%" r="65%">
+      <stop offset="0%" stop-color="#fed7aa" stop-opacity="0.25" />
+      <stop offset="60%" stop-color="#fed7aa" stop-opacity="0.08" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </radialGradient>
+    <linearGradient id="paSpecular" x1="15%" y1="10%" x2="70%" y2="85%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9" />
+      <stop offset="35%" stop-color="#f0f9ff" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0" />
+    </linearGradient>
+    <radialGradient id="paEyeCore" cx="42%" cy="38%" r="65%">
+      <stop offset="0%" stop-color="#1e293b" />
+      <stop offset="65%" stop-color="#0f172a" />
+      <stop offset="95%" stop-color="#020617" />
+      <stop offset="100%" stop-color="#000000" />
+    </radialGradient>
+    <radialGradient id="paIris" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.8" />
+      <stop offset="70%" stop-color="#0070ba" stop-opacity="0.4" />
+      <stop offset="100%" stop-color="#003087" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="paInnerEar" cx="38%" cy="28%" r="70%">
+      <stop offset="0%" stop-color="#67e8f9" />
+      <stop offset="35%" stop-color="#0070ba" />
+      <stop offset="80%" stop-color="#003087" />
+      <stop offset="100%" stop-color="#001845" />
+    </radialGradient>
+    <radialGradient id="paBlush" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fb7185" stop-opacity="0.5" />
+      <stop offset="65%" stop-color="#f43f5e" stop-opacity="0.22" />
+      <stop offset="100%" stop-color="#f43f5e" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="paGold" cx="35%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#fef08a" />
+      <stop offset="45%" stop-color="#eab308" />
+      <stop offset="90%" stop-color="#a16207" />
+      <stop offset="100%" stop-color="#713f12" />
+    </radialGradient>
+  </defs>
+
+  <!-- Left Ear (Porcelain Dome with Blue Concha) -->
+  <path d="M 52 56 C 36 28, 62 10, 76 38 Z" fill="url(#paPorcelain)" />
+  <path d="M 54 50 C 44 32, 60 20, 70 40 Z" fill="url(#paInnerEar)" />
+
+  <!-- Right Ear (Porcelain Dome with Blue Concha) -->
+  <path d="M 128 56 C 144 28, 118 10, 104 38 Z" fill="url(#paPorcelain)" />
+  <path d="M 126 50 C 136 32, 120 20, 110 40 Z" fill="url(#paInnerEar)" />
+
+  <!-- 3D Porcelain Head Volume -->
+  <path d="M 90 26 C 144 26, 160 62, 160 108 C 160 152, 134 166, 90 166 C 46 166, 20 152, 20 108 C 20 62, 36 26, 90 26 Z" fill="url(#paPorcelain)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" />
+  <path d="M 90 60 C 140 60, 158 85, 158 112 C 158 150, 132 165, 90 165 C 48 165, 22 150, 22 112 C 22 85, 40 60, 90 60 Z" fill="url(#paSSS)" />
+  <path d="M 90 28 C 136 28, 152 56, 152 96 C 152 114, 146 130, 136 140 C 112 94, 68 94, 44 140 C 34 130, 28 114, 28 96 C 28 56, 44 28, 90 28 Z" fill="url(#paSpecular)" opacity="0.65" />
+
+  <!-- Airbrushed Rosy Cheeks -->
+  <ellipse cx="46" cy="114" rx="15" ry="9" fill="url(#paBlush)" />
+  <ellipse cx="134" cy="114" rx="15" ry="9" fill="url(#paBlush)" />
+
+  <!-- Left Eye -->
+  <ellipse cx="63" cy="94" rx="11" ry="13.5" fill="url(#paEyeCore)" />
+  <ellipse cx="63" cy="95" rx="8" ry="8" fill="url(#paIris)" />
+  <ellipse cx="63" cy="94" rx="6" ry="7.5" fill="#000000" />
+  <circle cx="59" cy="89" r="3.8" fill="#ffffff" />
+  <circle cx="66" cy="98" r="1.8" fill="#ffffff" opacity="0.65" />
+
+  <!-- Right Eye -->
+  <ellipse cx="117" cy="94" rx="11" ry="13.5" fill="url(#paEyeCore)" />
+  <ellipse cx="117" cy="95" rx="8" ry="8" fill="url(#paIris)" />
+  <ellipse cx="117" cy="94" rx="6" ry="7.5" fill="#000000" />
+  <circle cx="113" cy="89" r="3.8" fill="#ffffff" />
+  <circle cx="120" cy="98" r="1.8" fill="#ffffff" opacity="0.65" />
+
+  <!-- Mouth -->
+  <path d="M 82 108 Q 90 115 98 108" stroke="#1e293b" stroke-width="3" stroke-linecap="round" fill="none" />
+
+  <!-- Collar & Medallion -->
+  <g transform="translate(76, 142)">
+    <path d="M -8 -4 Q 14 6 36 -4" stroke="#003087" stroke-width="5" stroke-linecap="round" opacity="0.9" />
+    <path d="M -7 -5 Q 14 5 35 -5" stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round" opacity="0.75" />
+    <circle cx="14" cy="14" r="12" fill="url(#paInnerEar)" />
+    <circle cx="14" cy="14" r="14" fill="none" stroke="url(#paGold)" stroke-width="2" />
+    <circle cx="14" cy="14" r="3" fill="#ffffff" />
+  </g>
+</svg>

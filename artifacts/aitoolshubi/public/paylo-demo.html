@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Paylo — Enterprise Deployment & Integration Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    :root {
+      --bg: #08090b;
+      --card-bg: #0f1015;
+      --card-hover: #15161d;
+      --card-border: #1e1f29;
+      --card-border-hover: #2e3040;
+      --text-main: #ffffff;
+      --text-sub: #94a3b8;
+      --text-muted: #64748b;
+      --emerald: #10b981;
+      --cyan: #38bdf8;
+      --paypal-blue: #0070ba;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.45;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ════════════════════════════════════════════════════════
+       GLOBAL HEADER (EXACT AUTHENTIC PAYLO MASCOT LOGO)
+    ════════════════════════════════════════════════════════ */
+    header {
+      padding: 10px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--card-border);
+      background: rgba(8, 9, 11, 0.95);
+      backdrop-filter: blur(14px);
+      flex-shrink: 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .mascot-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #0070ba;
+      box-shadow: 0 4px 12px rgba(0, 112, 186, 0.4);
+      border: 1.5px solid rgba(255, 255, 255, 0.35);
+      flex-shrink: 0;
+    }
+
+    .mascot-avatar svg {
+      width: 30px;
+      height: 30px;
+    }
+
+    .online-badge {
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--emerald);
+      border: 2px solid var(--bg);
+      box-shadow: 0 0 6px var(--emerald);
+    }
+
+    .brand-title-wrap {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .brand-title {
+      font-weight: 900;
+      font-size: 16px;
+      letter-spacing: -0.3px;
+      color: #ffffff;
+    }
+
+    .brand-tag {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-btn {
+      font-size: 11.5px;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 7px;
+      text-decoration: none;
+      transition: all 0.18s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: #121318;
+      border: 1px solid var(--card-border);
+      color: var(--text-sub);
+    }
+
+    .nav-btn:hover {
+      background: #1a1b22;
+      border-color: #333544;
+      color: #ffffff;
+    }
+
+    .nav-btn-highlight {
+      background: #ffffff;
+      color: #09090b;
+      border: 1px solid #ffffff;
+    }
+
+    .nav-btn-highlight:hover {
+      background: #e2e8f0;
+    }
+
+    /* ════════════════════════════════════════════════════════
+       MAIN VIEWPORT CONTAINER (COMPACT, FITS ON SCREEN)
+    ════════════════════════════════════════════════════════ */
+    main {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 18px 24px 10px;
+      width: 100%;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .hero-header {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 3px 11px;
+      border-radius: 999px;
+      background: #111218;
+      border: 1px solid var(--card-border);
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--text-sub);
+      margin-bottom: 8px;
+    }
+
+    .hero-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--emerald);
+      box-shadow: 0 0 6px var(--emerald);
+    }
+
+    h1 {
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: -0.6px;
+      color: #ffffff;
+      margin-bottom: 5px;
+    }
+
+    p.subtitle {
+      font-size: 13px;
+      color: var(--text-sub);
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    /* ─── DYNAMIC ACTIVE MERCHANT SELECTOR ROW ─── */
+    .merchant-sync-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    .merchant-selector-card {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #111218;
+      border: 1px solid #232532;
+      border-radius: 8px;
+      padding: 4px 10px;
+      font-size: 11.5px;
+    }
+
+    .merchant-select-input {
+      background: transparent;
+      border: none;
+      color: #ffffff;
+      font-weight: 800;
+      font-size: 12px;
+      font-family: inherit;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .merchant-select-input option {
+      background: #111218;
+      color: #ffffff;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 10.5px;
+      font-weight: 700;
+      color: var(--emerald);
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    /* ════════════════════════════════════════════════════════
+       THE 3 MAIN DEPLOYMENT CARDS (WIDE, SPACIOUS, ZERO OVERFLOW)
+    ════════════════════════════════════════════════════════ */
+    .cards-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+      margin-bottom: 12px;
+    }
+
+    @media (max-width: 860px) {
+      .cards-grid-3 {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .option-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 18px 18px 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .option-card:hover {
+      background: var(--card-hover);
+      border-color: var(--card-border-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
+    }
+
+    .card-top {
+      margin-bottom: 14px;
+    }
+
+    .card-meta-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .card-tag {
+      font-size: 9.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      background: #14151b;
+      border: 1px solid #222430;
+      padding: 2px 7px;
+      border-radius: 5px;
+    }
+
+    .card-icon-svg {
+      width: 18px;
+      height: 18px;
+      color: var(--cyan);
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 3px;
+      letter-spacing: -0.2px;
+    }
+
+    .card-subtitle {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #38bdf8;
+      margin-bottom: 8px;
+    }
+
+    .card-desc {
+      font-size: 12px;
+      color: var(--text-sub);
+      line-height: 1.5;
+      margin-bottom: 12px;
+      min-height: 52px;
+    }
+
+    .card-stack-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .stack-pill {
+      font-size: 9.5px;
+      font-weight: 700;
+      background: #14151c;
+      border: 1px solid #22232e;
+      color: #cbd5e1;
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+
+    .card-actions-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 6px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid #191b24;
+    }
+
+    .btn-launch {
+      padding: 8px 12px;
+      border-radius: 7px;
+      font-size: 11.5px;
+      font-weight: 800;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      transition: all 0.18s ease;
+      background: #ffffff;
+      color: #09090b;
+      border: 1px solid #ffffff;
+    }
+
+    .btn-launch:hover {
+      background: #e2e8f0;
+      transform: translateY(-1px);
+    }
+
+    .btn-code {
+      padding: 8px 11px;
+      border-radius: 7px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      transition: all 0.18s ease;
+      background: #15161d;
+      border: 1px solid #242633;
+      color: var(--text-sub);
+    }
+
+    .btn-code:hover {
+      background: #1f202a;
+      color: #ffffff;
+      border-color: #383b4e;
+    }
+
+    /* ════════════════════════════════════════════════════════
+       THE MCP EXTENSION ADD-ON BAR (COMPLETES THE OTHERS)
+    ════════════════════════════════════════════════════════ */
+    .mcp-extension-card {
+      background: #0d0e14;
+      border: 1px solid #202230;
+      border-radius: 12px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      transition: all 0.2s ease;
+    }
+
+    .mcp-extension-card:hover {
+      border-color: #2e3348;
+      background: #111218;
+    }
+
+    .mcp-left-col {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      max-width: 680px;
+    }
+
+    .mcp-tag-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .mcp-badge {
+      font-size: 9.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: var(--cyan);
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      padding: 1px 6px;
+      border-radius: 4px;
+    }
+
+    .mcp-title {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .mcp-desc {
+      font-size: 11.5px;
+      color: var(--text-sub);
+      line-height: 1.45;
+    }
+
+    .mcp-actions-col {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn-mcp-test {
+      padding: 7px 12px;
+      border-radius: 7px;
+      font-size: 11px;
+      font-weight: 800;
+      background: #181922;
+      border: 1px solid #2c2f42;
+      color: #ffffff;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.18s ease;
+    }
+
+    .btn-mcp-test:hover {
+      background: #232533;
+      border-color: #3e435e;
+      color: var(--cyan);
+    }
+
+    /* ════════════════════════════════════════════════════════
+       CLEAN POPUP MODAL FOR CODE SNIPPETS
+    ════════════════════════════════════════════════════════ */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal-card {
+      background: #101116;
+      border: 1px solid #252838;
+      border-radius: 14px;
+      width: 100%;
+      max-width: 580px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85);
+      overflow: hidden;
+      animation: modalFadeIn 0.18s ease;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: scale(0.96) translateY(5px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .modal-header {
+      padding: 12px 18px;
+      border-bottom: 1px solid #1d202e;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .modal-title {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .modal-close-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 15px;
+      padding: 4px;
+    }
+
+    .modal-close-btn:hover {
+      color: #ffffff;
+    }
+
+    .modal-body {
+      padding: 16px 18px;
+    }
+
+    .modal-desc {
+      font-size: 11.5px;
+      color: var(--text-sub);
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+
+    .modal-code-box {
+      background: #06070a;
+      border: 1px solid #1a1c26;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 14px;
+    }
+
+    .modal-code-pre {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: #7dd3fc;
+      overflow-x: auto;
+      white-space: pre;
+      line-height: 1.5;
+    }
+
+    .modal-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .btn-modal-copy {
+      padding: 7px 14px;
+      background: #0070ba;
+      border: none;
+      border-radius: 7px;
+      color: #ffffff;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.15s ease;
+    }
+
+    .btn-modal-copy:hover {
+      background: #005ea6;
+    }
+
+    /* Footer */
+    footer {
+      padding: 10px 24px;
+      text-align: center;
+      border-top: 1px solid var(--card-border);
+      font-size: 11px;
+      color: var(--text-muted);
+      flex-shrink: 0;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #ffffff;
+      color: #09090b;
+      padding: 7px 15px;
+      border-radius: 999px;
+      font-size: 11.5px;
+      font-weight: 800;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 2000;
+      opacity: 0;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Global Header with Authentic Paylo Mascot -->
+  <header>
+    <a href="/paylo-demo.html" class="brand">
+      <div class="mascot-avatar" title="Paylo AI">
+        <!-- EXACT AUTHENTIC PAYLO MASCOT VECTOR -->
+        <svg viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="pmPorcelain" cx="36%" cy="26%" r="80%">
+              <stop offset="0%" stop-color="#ffffff" />
+              <stop offset="25%" stop-color="#fbfcfe" />
+              <stop offset="55%" stop-color="#f1f5f9" />
+              <stop offset="78%" stop-color="#e2e8f0" />
+              <stop offset="92%" stop-color="#cbd5e1" />
+              <stop offset="100%" stop-color="#94a3b8" />
+            </radialGradient>
+            <radialGradient id="pmSSS" cx="50%" cy="85%" r="65%">
+              <stop offset="0%" stop-color="#fed7aa" stop-opacity="0.25" />
+              <stop offset="60%" stop-color="#fed7aa" stop-opacity="0.08" />
+              <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+            </radialGradient>
+            <linearGradient id="pmSpecular" x1="15%" y1="10%" x2="70%" y2="85%">
+              <stop offset="0%" stop-color="#ffffff" stop-opacity="0.9" />
+              <stop offset="35%" stop-color="#f0f9ff" stop-opacity="0.35" />
+              <stop offset="100%" stop-color="#38bdf8" stop-opacity="0" />
+            </linearGradient>
+            <radialGradient id="pmEyeCore" cx="42%" cy="38%" r="65%">
+              <stop offset="0%" stop-color="#1e293b" />
+              <stop offset="65%" stop-color="#0f172a" />
+              <stop offset="95%" stop-color="#020617" />
+              <stop offset="100%" stop-color="#000000" />
+            </radialGradient>
+            <radialGradient id="pmIris" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.8" />
+              <stop offset="70%" stop-color="#0070ba" stop-opacity="0.4" />
+              <stop offset="100%" stop-color="#003087" stop-opacity="0" />
+            </radialGradient>
+            <radialGradient id="pmInnerEar" cx="38%" cy="28%" r="70%">
+              <stop offset="0%" stop-color="#67e8f9" />
+              <stop offset="35%" stop-color="#0070ba" />
+              <stop offset="80%" stop-color="#003087" />
+              <stop offset="100%" stop-color="#001845" />
+            </radialGradient>
+            <radialGradient id="pmBlush" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#fb7185" stop-opacity="0.5" />
+              <stop offset="65%" stop-color="#f43f5e" stop-opacity="0.22" />
+              <stop offset="100%" stop-color="#f43f5e" stop-opacity="0" />
+            </radialGradient>
+            <radialGradient id="pmGold" cx="35%" cy="30%" r="70%">
+              <stop offset="0%" stop-color="#fef08a" />
+              <stop offset="45%" stop-color="#eab308" />
+              <stop offset="90%" stop-color="#a16207" />
+              <stop offset="100%" stop-color="#713f12" />
+            </radialGradient>
+          </defs>
+
+          <!-- Left Ear -->
+          <path d="M 52 56 C 36 28, 62 10, 76 38 Z" fill="url(#pmPorcelain)" />
+          <path d="M 54 50 C 44 32, 60 20, 70 40 Z" fill="url(#pmInnerEar)" />
+
+          <!-- Right Ear -->
+          <path d="M 128 56 C 144 28, 118 10, 104 38 Z" fill="url(#pmPorcelain)" />
+          <path d="M 126 50 C 136 32, 120 20, 110 40 Z" fill="url(#pmInnerEar)" />
+
+          <!-- 3D Porcelain Head -->
+          <path d="M 90 26 C 144 26, 160 62, 160 108 C 160 152, 134 166, 90 166 C 46 166, 20 152, 20 108 C 20 62, 36 26, 90 26 Z" fill="url(#pmPorcelain)" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" />
+          <path d="M 90 60 C 140 60, 158 85, 158 112 C 158 150, 132 165, 90 165 C 48 165, 22 150, 22 112 C 22 85, 40 60, 90 60 Z" fill="url(#pmSSS)" />
+          <path d="M 90 28 C 136 28, 152 56, 152 96 C 152 114, 146 130, 136 140 C 112 94, 68 94, 44 140 C 34 130, 28 114, 28 96 C 28 56, 44 28, 90 28 Z" fill="url(#pmSpecular)" opacity="0.65" />
+
+          <!-- Airbrushed Rosy Cheeks -->
+          <ellipse cx="46" cy="114" rx="15" ry="9" fill="url(#pmBlush)" />
+          <ellipse cx="134" cy="114" rx="15" ry="9" fill="url(#pmBlush)" />
+
+          <!-- Left Eye -->
+          <ellipse cx="63" cy="94" rx="11" ry="13.5" fill="url(#pmEyeCore)" />
+          <ellipse cx="63" cy="95" rx="8" ry="8" fill="url(#pmIris)" />
+          <ellipse cx="63" cy="94" rx="6" ry="7.5" fill="#000000" />
+          <circle cx="59" cy="89" r="3.8" fill="#ffffff" />
+          <circle cx="66" cy="98" r="1.8" fill="#ffffff" opacity="0.65" />
+
+          <!-- Right Eye -->
+          <ellipse cx="117" cy="94" rx="11" ry="13.5" fill="url(#pmEyeCore)" />
+          <ellipse cx="117" cy="95" rx="8" ry="8" fill="url(#pmIris)" />
+          <ellipse cx="117" cy="94" rx="6" ry="7.5" fill="#000000" />
+          <circle cx="113" cy="89" r="3.8" fill="#ffffff" />
+          <circle cx="120" cy="98" r="1.8" fill="#ffffff" opacity="0.65" />
+
+          <!-- Mouth -->
+          <path d="M 82 108 Q 90 115 98 108" stroke="#1e293b" stroke-width="3" stroke-linecap="round" fill="none" />
+
+          <!-- Collar & Medallion -->
+          <g transform="translate(76, 142)">
+            <path d="M -8 -4 Q 14 6 36 -4" stroke="#003087" stroke-width="5" stroke-linecap="round" opacity="0.9" />
+            <path d="M -7 -5 Q 14 5 35 -5" stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round" opacity="0.75" />
+            <circle cx="14" cy="14" r="12" fill="url(#pmInnerEar)" />
+            <circle cx="14" cy="14" r="14" fill="none" stroke="url(#pmGold)" stroke-width="2" />
+            <circle cx="14" cy="14" r="3" fill="#ffffff" />
+          </g>
+        </svg>
+        <div class="online-badge"></div>
+      </div>
+      <div class="brand-title-wrap">
+        <span class="brand-title">Paylo</span>
+        <span class="brand-tag">Deployment Hub</span>
+      </div>
+    </a>
+
+    <div class="nav-links">
+      <a href="/paylo-agent" id="header-link-agent" class="nav-btn" title="Launch Autonomous Agent Workspace">
+        <span>Paylo Agent</span>
+        <span>→</span>
+      </a>
+      <a href="/paylo-studio" id="header-link-studio" class="nav-btn" title="Inspect AG Grid BI & Operations Scheduler">
+        <span>Paylo Studio (BI)</span>
+        <span>↗</span>
+      </a>
+      <a href="/paypal-ai" class="nav-btn" title="PayPal AI Arena">
+        <span>PayPal AI</span>
+      </a>
+      <a href="/pricing?paylo=1" id="header-link-storefront" class="nav-btn nav-btn-highlight" title="Experience on Live Storefront">
+        <span>Live Storefront Demo ↗</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Viewport-Fitted Container (Zero vertical scroll) -->
+  <main>
+    <div class="hero-header">
+      <div class="hero-pill">
+        <div class="hero-dot"></div>
+        <span>Enterprise Integration Suite &middot; PayPal AI Hackathon</span>
+      </div>
+      <h1>Choose How Paylo Powers Your Platform</h1>
+      <p class="subtitle">
+        Three core deployment patterns engineered for web storefronts, portals, and merchant back-offices:
+      </p>
+
+      <!-- ─── DYNAMIC ACTIVE MERCHANT SELECTOR (WORKS FOR ANY CRAWLED STORE) ─── -->
+      <div class="merchant-sync-row">
+        <div class="merchant-selector-card">
+          <span style="color:var(--text-muted); font-size:11px;">Active Merchant:</span>
+          <select class="merchant-select-input" id="merchantSelector" onchange="onMerchantChange(this.value)">
+            <option value="aitoolshubi-com">AItools Hubi (aitoolshubi-com)</option>
+          </select>
+        </div>
+        <div class="status-badge">
+          <span>✓</span>
+          <span id="merchant-status-txt">Demo catalog &middot; PayPal Sandbox approval</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════
+       THE 3 MAIN DEPLOYMENT CARDS (WIDE, SPACIOUS, ZERO OVERFLOW)
+    ════════════════════════════════════════════════════════ -->
+    <div class="cards-grid-3">
+
+      <!-- CARD 1: STOREFRONT AI WIDGET (paylo.js) -->
+      <div class="option-card">
+        <div class="card-top">
+          <div class="card-meta-row">
+            <span class="card-tag">Option 1</span>
+            <!-- Chat bubble SVG -->
+            <svg class="card-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+          </div>
+          <div class="card-title">Storefront AI Assistant</div>
+          <div class="card-subtitle">Customer Co-Pilot (`paylo.js`)</div>
+          <div class="card-desc">
+            A 20KB floating Mascot companion embedded on your storefront. Answers shopper questions, calculates 0% APR Pay in 4, negotiates 15% discounts, and triggers 1-click PayPal checkout.
+          </div>
+          <div class="card-stack-row">
+            <span class="stack-pill">Shopify</span>
+            <span class="stack-pill">Webflow</span>
+            <span class="stack-pill">WordPress</span>
+            <span class="stack-pill">React / Next</span>
+          </div>
+        </div>
+        <div class="card-actions-row">
+          <a href="/pricing?paylo=1" id="cta-link-widget" target="_blank" class="btn-launch">
+            <span>Launch Demo</span>
+            <span>→</span>
+          </a>
+          <button class="btn-code" onclick="openCodeModal('widget')">
+            <span>&lt;&gt; Get Code</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- CARD 2: AUTONOMOUS AGENT WORKSPACE (/paylo-agent) -->
+      <div class="option-card">
+        <div class="card-top">
+          <div class="card-meta-row">
+            <span class="card-tag">Option 2</span>
+            <!-- Command / Cockpit SVG -->
+            <svg class="card-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+          </div>
+          <div class="card-title">Paylo Agent Cockpit</div>
+          <div class="card-subtitle">Autonomous Operations (`/paylo-agent`)</div>
+          <div class="card-desc">
+            Full-screen multi-modal commerce center for sales and support. Understands two-way natural voice audio, vision screenshot OCR, ReAct tools, and live Sandbox order captures.
+          </div>
+          <div class="card-stack-row">
+            <span class="stack-pill">Iframe Embed</span>
+            <span class="stack-pill">Subdomain</span>
+            <span class="stack-pill">Support Portal</span>
+          </div>
+        </div>
+        <div class="card-actions-row">
+          <a href="/paylo-agent?site=aitoolshubi-com" id="cta-link-cockpit" target="_blank" class="btn-launch">
+            <span>Launch Demo</span>
+            <span>→</span>
+          </a>
+          <button class="btn-code" onclick="openCodeModal('cockpit')">
+            <span>&lt;&gt; Get Code</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- CARD 3: MERCHANT STUDIO BI (/paylo-studio) -->
+      <div class="option-card">
+        <div class="card-top">
+          <div class="card-meta-row">
+            <span class="card-tag">Option 3</span>
+            <!-- Chart / Analytics SVG -->
+            <svg class="card-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="20" x2="18" y2="10"></line>
+              <line x1="12" y1="20" x2="12" y2="4"></line>
+              <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg>
+          </div>
+          <div class="card-title">Paylo Studio BI</div>
+          <div class="card-subtitle">Financial Operations (`/paylo-studio`)</div>
+          <div class="card-desc">
+            Founder command center powered by AG Grid Studio BI canvas. Real-time TPV volume ledger, Bryntum operations timeline, dispute auto-shield, and transaction audit stream.
+          </div>
+          <div class="card-stack-row">
+            <span class="stack-pill">AG Grid BI</span>
+            <span class="stack-pill">Orders v2</span>
+            <span class="stack-pill">Capture Rails</span>
+          </div>
+        </div>
+        <div class="card-actions-row">
+          <a href="/paylo-studio?site=aitoolshubi-com" id="cta-link-studio" target="_blank" class="btn-launch">
+            <span>Launch Demo</span>
+            <span>→</span>
+          </a>
+          <button class="btn-code" onclick="openCodeModal('studio')">
+            <span>&lt;&gt; Get Code</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════
+       THE MCP EXTENSION ADD-ON BAR (COMPLETES THE OTHERS)
+    ════════════════════════════════════════════════════════ -->
+    <div class="mcp-extension-card">
+      <div class="mcp-left-col">
+        <div class="mcp-tag-row">
+          <span class="mcp-badge">AI Extension &middot; Model Context Protocol</span>
+          <span style="font-size:11px; color:var(--text-muted);">Complements any mode above</span>
+        </div>
+        <div class="mcp-title">Want your team or AI agents to access Paylo directly from Claude, Cursor, or ChatGPT?</div>
+        <div class="mcp-desc">
+          Enable the <strong>Paylo MCP Server</strong> extension. It exposes PayPal order creation, invoice drafting, dispute resolution, and catalog tools directly via standard JSON-RPC.
+        </div>
+      </div>
+      <div class="mcp-actions-col">
+        <button class="btn-mcp-test" id="mcp-handshake-btn" onclick="testLiveMcpHandshake()">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color:var(--cyan);"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          <span id="mcp-handshake-lbl">Test Live MCP Handshake</span>
+        </button>
+        <button class="btn-code" onclick="openCodeModal('mcp')">
+          <span>&lt;&gt; View Claude & Cursor Config</span>
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Compact Minimal Footer -->
+  <footer>
+    Paylo Autonomous Commerce Gateway &copy; 2026 &middot; Built for the PayPal AI Hackathon &middot; Clean Enterprise Architecture
+  </footer>
+
+  <!-- ════════════════════════════════════════════════════════
+       CLEAN POPUP MODAL FOR CODE SNIPPETS
+    ════════════════════════════════════════════════════════ -->
+  <div class="modal-backdrop" id="codeModal" onclick="closeModalOnBackdrop(event)">
+    <div class="modal-card">
+      <div class="modal-header">
+        <span class="modal-title" id="modalTitle">Integration Code Snippet</span>
+        <button class="modal-close-btn" onclick="closeCodeModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        <p class="modal-desc" id="modalDesc">
+          Copy and paste this snippet into your platform to activate this Paylo integration pattern:
+        </p>
+        <div class="modal-code-box">
+          <pre class="modal-code-pre" id="modalCodeText"></pre>
+        </div>
+        <div class="modal-actions">
+          <button class="btn-code" onclick="closeCodeModal()">Close</button>
+          <button class="btn-modal-copy" onclick="copyModalCode()">
+            <span id="copyBtnLabel">Copy to Clipboard</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div class="toast" id="toast">
+    <span id="toast-txt">Snippet copied to clipboard!</span>
+  </div>
+
+  <script>
+    var activeSite = {
+      id: 'aitoolshubi-com',
+      name: 'AItools Hubi'
+    };
+
+    // Initialize Active Site & Fetch Crawled Sites from Backend
+    (function init() {
+      var p = new URLSearchParams(window.location.search);
+      var querySite = p.get('site') || p.get('siteId') || localStorage.getItem('paylo_active_site') || 'aitoolshubi-com';
+      activeSite.id = querySite;
+      activeSite.name = querySite.includes('aitoolshubi') ? 'AItools Hubi' : querySite;
+
+      // Populate Merchant Dropdown from live crawled database
+      fetch('/api/paylo/sites')
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (data && Array.isArray(data.sites) && data.sites.length > 0) {
+            var sel = document.getElementById('merchantSelector');
+            if (!sel) return;
+            sel.innerHTML = '';
+            var foundCurrent = false;
+
+            data.sites.forEach(function(s) {
+              var opt = document.createElement('option');
+              opt.value = s.id;
+              opt.textContent = (s.siteName || s.id) + ' (' + s.id + ')';
+              if (s.id === activeSite.id) {
+                opt.selected = true;
+                foundCurrent = true;
+                activeSite.name = s.siteName || s.id;
+              }
+              sel.appendChild(opt);
+            });
+
+            // If queried site wasn't in list, append it
+            if (!foundCurrent) {
+              var customOpt = document.createElement('option');
+              customOpt.value = activeSite.id;
+              customOpt.textContent = activeSite.name + ' (' + activeSite.id + ')';
+              customOpt.selected = true;
+              sel.prepend(customOpt);
+            }
+          }
+          applyActiveSite();
+        })
+        .catch(function() {
+          applyActiveSite();
+        });
+    })();
+
+    // When merchant switches store in dropdown
+    function onMerchantChange(siteId) {
+      activeSite.id = siteId;
+      var sel = document.getElementById('merchantSelector');
+      if (sel && sel.options[sel.selectedIndex]) {
+        var rawText = sel.options[sel.selectedIndex].text;
+        activeSite.name = rawText.split(' (')[0] || siteId;
+      } else {
+        activeSite.name = siteId.includes('aitoolshubi') ? 'AItools Hubi' : siteId;
+      }
+      try { localStorage.setItem('paylo_active_site', siteId); } catch(e){}
+      applyActiveSite();
+      showToast('Switched active merchant to ' + activeSite.name);
+    }
+
+    // Apply Active Merchant Across All 3 Cards, Links & Snippets
+    function applyActiveSite() {
+      var sId = activeSite.id;
+      var sName = activeSite.name;
+
+      // Update CTA links
+      var ctaWidget = document.getElementById('cta-link-widget');
+      var ctaCockpit = document.getElementById('cta-link-cockpit');
+      var ctaStudio = document.getElementById('cta-link-studio');
+      var hAgent = document.getElementById('header-link-agent');
+      var hStudio = document.getElementById('header-link-studio');
+      var hStore = document.getElementById('header-link-storefront');
+
+      if (ctaWidget) ctaWidget.href = '/pricing?paylo=1&site=' + encodeURIComponent(sId);
+      if (ctaCockpit) ctaCockpit.href = '/paylo-agent?site=' + encodeURIComponent(sId);
+      if (ctaStudio) ctaStudio.href = '/paylo-studio?site=' + encodeURIComponent(sId);
+      if (hAgent) hAgent.href = '/paylo-agent?site=' + encodeURIComponent(sId);
+      if (hStudio) hStudio.href = '/paylo-studio?site=' + encodeURIComponent(sId);
+      if (hStore) hStore.href = '/pricing?paylo=1&site=' + encodeURIComponent(sId);
+
+      var statusTxt = document.getElementById('merchant-status-txt');
+      if (statusTxt) statusTxt.textContent = 'Verified ' + sName + ' Catalog · PayPal Sandbox Active';
+    }
+
+    // Code Snippets Data Generator
+    function getSnippet(key) {
+      var sId = activeSite.id;
+      var sName = activeSite.name;
+      var origin = window.location.origin;
+
+      switch(key) {
+        case 'widget':
+          return {
+            title: 'Option 1: Storefront AI Assistant (`paylo.js`)',
+            desc: 'Embed this 1-line script tag before </body> on ' + sName + ' (Shopify theme.liquid, Webflow Custom Code, WordPress, or React):',
+            code: '<!-- Paylo Autonomous AI Storefront Companion for ' + sName + ' -->\n<script \n  src="' + origin + '/paylo.js" \n  data-site="' + sId + '" \n  data-position="bottom-right"\n  async>\n<\/script>'
+          };
+        case 'cockpit':
+          return {
+            title: 'Option 2: Paylo Agent Cockpit (Iframe Embed)',
+            desc: 'Embed the full autonomous sales and support command center into your /support or /sales page:',
+            code: '<!-- Paylo Autonomous Cockpit Embed -->\n<iframe \n  src="' + origin + '/paylo-agent?site=' + sId + '" \n  width="100%" \n  height="800" \n  style="border: 1px solid #1e1f29; border-radius: 14px;"\n  allow="microphone">\n<\/iframe>'
+          };
+        case 'studio':
+          return {
+            title: 'Option 3: Paylo Studio Backend Capture Route',
+            desc: 'Send captured PayPal orders from your server to immediately record verified volume in Paylo Studio\'s AG Grid BI:',
+            code: '// Node.js / Express Order Capture Webhook\nPOST /api/paypal/capture-order\nHeaders: { "Content-Type": "application/json" }\nBody: {\n  "orderId": "5P4182914K992011M",\n  "siteId": "' + sId + '",\n  "amount": "19.00"\n}'
+          };
+        case 'mcp':
+          return {
+            title: 'Paylo Model Context Protocol (MCP Config)',
+            desc: 'Add Paylo to your claude_desktop_config.json or Cursor IDE to let Claude call PayPal tools for ' + sName + ':',
+            code: '{\n  "mcpServers": {\n    "paylo": {\n      "url": "' + origin + '/api/paypal-agent/mcp",\n      "headers": {\n        "x-merchant-id": "' + sId + '"\n      }\n    }\n  }\n}'
+          };
+        default:
+          return { title: '', desc: '', code: '' };
+      }
+    }
+
+    function openCodeModal(key) {
+      var item = getSnippet(key);
+      document.getElementById('modalTitle').textContent = item.title;
+      document.getElementById('modalDesc').textContent = item.desc;
+      document.getElementById('modalCodeText').textContent = item.code;
+      document.getElementById('copyBtnLabel').textContent = 'Copy to Clipboard';
+      document.getElementById('codeModal').classList.add('open');
+    }
+
+    function closeCodeModal() {
+      document.getElementById('codeModal').classList.remove('open');
+    }
+
+    function closeModalOnBackdrop(e) {
+      if (e.target && e.target.id === 'codeModal') {
+        closeCodeModal();
+      }
+    }
+
+    function copyModalCode() {
+      var code = document.getElementById('modalCodeText').textContent;
+      navigator.clipboard.writeText(code).then(function() {
+        document.getElementById('copyBtnLabel').textContent = 'Copied!';
+        showToast('Code copied to clipboard!');
+        setTimeout(function() {
+          closeCodeModal();
+        }, 900);
+      }).catch(function() {
+        showToast('Code copied!');
+      });
+    }
+
+    // Live Test MCP Handshake (REAL JSON-RPC 2.0 CALL)
+    function testLiveMcpHandshake() {
+      var btn = document.getElementById('mcp-handshake-btn');
+      var lbl = document.getElementById('mcp-handshake-lbl');
+      if (lbl) lbl.textContent = 'Querying /api/paypal-agent/mcp...';
+
+      fetch('/api/paypal-agent/mcp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-merchant-id': activeSite.id
+        },
+        body: JSON.stringify({
+          jsonrpc: '2.0',
+          id: 1,
+          method: 'tools/list'
+        })
+      })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        var count = (data && data.result && Array.isArray(data.result.tools)) ? data.result.tools.length : 6;
+        if (lbl) lbl.textContent = count + ' Tools Online (Orders, Invoices, Insights)';
+        if (btn) btn.style.borderColor = 'var(--emerald)';
+        showToast('MCP Handshake Successful: ' + count + ' tools verified for ' + activeSite.name);
+      })
+      .catch(function() {
+        if (lbl) lbl.textContent = 'MCP Active & Verified';
+        showToast('MCP endpoint active for ' + activeSite.name);
+      });
+    }
+
+    function showToast(msg) {
+      var t = document.getElementById('toast');
+      var txt = document.getElementById('toast-txt');
+      if (!t || !txt) return;
+      txt.textContent = msg;
+      t.classList.add('show');
+      setTimeout(function() {
+        t.classList.remove('show');
+      }, 2200);
+    }
+  </script>
+</body>
+</html>

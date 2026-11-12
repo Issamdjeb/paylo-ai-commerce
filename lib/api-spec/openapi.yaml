@@ -1,0 +1,613 @@
+openapi: 3.1.0
+info:
+  # Do not change the title, if the title changes, the import paths will be broken
+  title: Api
+  version: 0.1.0
+  description: API specification
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: airtable
+    description: Airtable tools directory proxy
+  - name: chat
+    description: Hubi chatbot
+  - name: admin
+    description: Admin dashboard (protected)
+paths:
+  /admin/community-signups:
+    get:
+      operationId: adminGetCommunitySignups
+      tags: [admin]
+      summary: List all community/newsletter signups
+      security:
+        - AdminKey: []
+      responses:
+        "200":
+          description: List of signups
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CommunitySignupList"
+        "401":
+          description: Missing or invalid admin key
+  /admin/community-signups/{id}:
+    delete:
+      operationId: adminDeleteCommunitySignup
+      tags: [admin]
+      summary: Delete a community signup
+      security:
+        - AdminKey: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminActionResult"
+        "401":
+          description: Missing or invalid admin key
+        "404":
+          description: Not found
+  /admin/partnership-applications:
+    get:
+      operationId: adminGetPartnershipApplications
+      tags: [admin]
+      summary: List all partnership applications
+      security:
+        - AdminKey: []
+      responses:
+        "200":
+          description: List of applications
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PartnershipApplicationList"
+        "401":
+          description: Missing or invalid admin key
+  /admin/partnership-applications/{id}:
+    patch:
+      operationId: adminUpdatePartnershipApplicationStatus
+      tags: [admin]
+      summary: Update a partnership application's status
+      security:
+        - AdminKey: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateApplicationStatusRequest"
+      responses:
+        "200":
+          description: Updated application
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PartnershipApplication"
+        "401":
+          description: Missing or invalid admin key
+        "404":
+          description: Not found
+    delete:
+      operationId: adminDeletePartnershipApplication
+      tags: [admin]
+      summary: Delete a partnership application
+      security:
+        - AdminKey: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Deleted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminActionResult"
+        "401":
+          description: Missing or invalid admin key
+        "404":
+          description: Not found
+  /admin/status:
+    get:
+      operationId: adminGetStatus
+      tags: [admin]
+      summary: Integration and storage health for the admin dashboard
+      security:
+        - AdminKey: []
+      responses:
+        "200":
+          description: System status
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminStatusResponse"
+        "401":
+          description: Missing or invalid admin key
+  /admin/send-broadcast:
+    post:
+      operationId: adminSendBroadcast
+      tags: [admin]
+      summary: Send a marketing broadcast to subscribers
+      security:
+        - AdminKey: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BroadcastRequest"
+      responses:
+        "200":
+          description: Broadcast result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BroadcastResponse"
+        "400":
+          description: Validation error
+        "401":
+          description: Missing or invalid admin key
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      description: Returns server health status
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+  /airtable-proxy:
+    get:
+      operationId: getAirtableTools
+      tags: [airtable]
+      summary: Get a single page of Airtable records
+      parameters:
+        - name: baseId
+          in: query
+          schema: { type: string }
+        - name: table
+          in: query
+          schema: { type: string }
+        - name: filterByFormula
+          in: query
+          schema: { type: string }
+        - name: pageSize
+          in: query
+          schema: { type: string }
+        - name: offset
+          in: query
+          schema: { type: string }
+      responses:
+        "200":
+          description: A single page of Airtable records
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AirtablePage"
+  /airtable/tools:
+    get:
+      operationId: getAllAirtableTools
+      tags: [airtable]
+      summary: Get all Airtable records (auto-paginated)
+      parameters:
+        - name: baseId
+          in: query
+          schema: { type: string }
+        - name: table
+          in: query
+          schema: { type: string }
+        - name: filterByFormula
+          in: query
+          schema: { type: string }
+      responses:
+        "200":
+          description: All Airtable records
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AirtableAllRecords"
+  /chat-proxy:
+    post:
+      operationId: chatWithHubi
+      tags: [chat]
+      summary: Chat with the Hubi AI assistant
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChatRequest"
+      responses:
+        "200":
+          description: Chat reply
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ChatResponse"
+  /community-join:
+    post:
+      operationId: joinCommunity
+      tags: [community]
+      summary: Join community waitlist or subscribe to newsletter
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CommunityJoinRequest"
+      responses:
+        "200":
+          description: Join result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JoinActionResponse"
+        "400":
+          description: Validation error
+  /community-count:
+    get:
+      operationId: getCommunityCount
+      tags: [community]
+      summary: Get the community members count
+      responses:
+        "200":
+          description: Members count
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CommunityCountResponse"
+  /partnership-apply:
+    post:
+      operationId: applyPartnership
+      tags: [partnerships]
+      summary: Apply for a B2B partnership
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PartnershipApplyRequest"
+      responses:
+        "200":
+          description: Application result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JoinActionResponse"
+        "400":
+          description: Validation error
+  /partnership-stats:
+    get:
+      operationId: getPartnershipStats
+      tags: [partnerships]
+      summary: Get partnership application statistics
+      responses:
+        "200":
+          description: Partnership stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PartnershipStatsResponse"
+components:
+  securitySchemes:
+    AdminKey:
+      type: apiKey
+      in: header
+      name: x-admin-key
+  schemas:
+    CommunitySignup:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+        name:
+          type: string
+        plan:
+          type: string
+        createdAt:
+          type: string
+      required:
+        - id
+        - email
+        - name
+        - plan
+        - createdAt
+    CommunitySignupList:
+      type: object
+      properties:
+        signups:
+          type: array
+          items:
+            $ref: "#/components/schemas/CommunitySignup"
+      required:
+        - signups
+    PartnershipApplication:
+      type: object
+      properties:
+        id:
+          type: string
+        companyName:
+          type: string
+        toolName:
+          type: string
+        website:
+          type: string
+        email:
+          type: string
+        tier:
+          type: string
+        description:
+          type: string
+        status:
+          type: string
+          enum: [pending, approved, rejected]
+        createdAt:
+          type: string
+      required:
+        - id
+        - companyName
+        - toolName
+        - website
+        - email
+        - tier
+        - description
+        - status
+        - createdAt
+    PartnershipApplicationList:
+      type: object
+      properties:
+        applications:
+          type: array
+          items:
+            $ref: "#/components/schemas/PartnershipApplication"
+      required:
+        - applications
+    UpdateApplicationStatusRequest:
+      type: object
+      properties:
+        status:
+          type: string
+          enum: [pending, approved, rejected]
+      required:
+        - status
+    AdminActionResult:
+      type: object
+      properties:
+        success:
+          type: boolean
+      required:
+        - success
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+    AirtableRecord:
+      type: object
+      properties:
+        id:
+          type: string
+        createdTime:
+          type: string
+        fields:
+          type: object
+          additionalProperties: true
+      required:
+        - id
+        - fields
+    AirtablePage:
+      type: object
+      properties:
+        records:
+          type: array
+          items:
+            $ref: "#/components/schemas/AirtableRecord"
+        offset:
+          type: ["string", "null"]
+      required:
+        - records
+    AirtableAllRecords:
+      type: object
+      properties:
+        records:
+          type: array
+          items:
+            $ref: "#/components/schemas/AirtableRecord"
+      required:
+        - records
+    ChatMessage:
+      type: object
+      properties:
+        role:
+          type: string
+          enum: [user, assistant]
+        content:
+          type: string
+      required:
+        - role
+        - content
+    ChatRequest:
+      type: object
+      properties:
+        messages:
+          type: array
+          items:
+            $ref: "#/components/schemas/ChatMessage"
+      required:
+        - messages
+    ChatResponse:
+      type: object
+      properties:
+        reply:
+          type: string
+        error:
+          type: string
+      required:
+        - reply
+    CommunityJoinRequest:
+      type: object
+      properties:
+        email:
+          type: string
+        name:
+          type: string
+        plan:
+          type: string
+      required:
+        - email
+    JoinActionResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        alreadyExists:
+          type: boolean
+        upgraded:
+          type: boolean
+        message:
+          type: string
+        emailSent:
+          type: boolean
+        brevoSynced:
+          type: boolean
+        brevoConfigured:
+          type: boolean
+        emailError:
+          type: string
+      required:
+        - success
+        - message
+    AdminStatusResponse:
+      type: object
+      properties:
+        brevoConfigured:
+          type: boolean
+        adminConfigured:
+          type: boolean
+        storageBackend:
+          type: string
+          enum: [postgres, json]
+        dataDir:
+          type: string
+        signupCount:
+          type: integer
+        newsletterCount:
+          type: integer
+        communityCount:
+          type: integer
+        partnershipCount:
+          type: integer
+        pendingPartnerships:
+          type: integer
+      required:
+        - brevoConfigured
+        - adminConfigured
+        - storageBackend
+        - dataDir
+        - signupCount
+        - newsletterCount
+        - communityCount
+        - partnershipCount
+        - pendingPartnerships
+    BroadcastRequest:
+      type: object
+      properties:
+        audience:
+          type: string
+          enum: [all, newsletter, community]
+        title:
+          type: string
+        message:
+          type: string
+        buttonText:
+          type: string
+        buttonUrl:
+          type: string
+      required:
+        - title
+        - message
+    BroadcastResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        recipientCount:
+          type: integer
+        sent:
+          type: integer
+        failed:
+          type: integer
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            type: string
+      required:
+        - success
+        - message
+    CommunityCountResponse:
+      type: object
+      properties:
+        count:
+          type: integer
+        raw:
+          type: integer
+      required:
+        - count
+        - raw
+    PartnershipApplyRequest:
+      type: object
+      properties:
+        companyName:
+          type: string
+        toolName:
+          type: string
+        website:
+          type: string
+        email:
+          type: string
+        tier:
+          type: string
+        description:
+          type: string
+      required:
+        - companyName
+        - toolName
+        - email
+    PartnershipStatsResponse:
+      type: object
+      properties:
+        totalApps:
+          type: integer
+        approvedPartners:
+          type: integer
+      required:
+        - totalApps
+        - approvedPartners
+
+

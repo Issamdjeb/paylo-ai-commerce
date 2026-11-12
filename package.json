@@ -1,0 +1,14 @@
+{
+  "name": "paylo-hackathon-demo",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "packageManager": "pnpm@11.10.0",
+  "scripts": {
+    "dev": "pnpm --parallel --filter @workspace/api-server --filter @workspace/aitoolshubi dev",
+    "build:api": "pnpm --filter @workspace/api-server build",
+    "build:web": "pnpm --filter @workspace/aitoolshubi build",
+    "build": "pnpm run build:api && pnpm run build:web",
+    "typecheck": "pnpm --filter @workspace/api-server typecheck && pnpm --filter @workspace/aitoolshubi typecheck"
+  }
+}

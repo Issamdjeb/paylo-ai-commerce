@@ -1,0 +1,11 @@
+import { Router, type IRouter } from "express";
+import healthRouter from "./health.js";
+import paypalRouter from "./paypal.js";
+import paypalAgentRouter from "./paypal-agent.js";
+import payloRouter from "./paylo.js";
+const router: IRouter = Router();
+router.use(healthRouter);
+router.use(paypalRouter);
+router.use(paypalAgentRouter);
+router.use(payloRouter);
+export default router;

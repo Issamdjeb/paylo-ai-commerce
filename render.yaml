@@ -1,0 +1,38 @@
+services:
+  - type: web
+    name: paylo-hackathon
+    runtime: node
+    plan: free
+    buildCommand: pnpm install --frozen-lockfile && pnpm run build
+    startCommand: node artifacts/api-server/dist/index.mjs
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PAYPAL_MODE
+        value: sandbox
+      - key: PAYPAL_CLIENT_ID
+        sync: false
+      - key: PAYPAL_SECRET_KEY
+        sync: false
+      - key: PAYPAL_PLAN_COMMUNITY_MONTHLY
+        sync: false
+      - key: PAYPAL_PLAN_COMMUNITY_YEARLY
+        sync: false
+      - key: PAYPAL_PLAN_FEATURED_MONTHLY
+        sync: false
+      - key: PAYPAL_PLAN_FEATURED_YEARLY
+        sync: false
+      - key: PAYPAL_PLAN_PREMIUM_MONTHLY
+        sync: false
+      - key: PAYPAL_PLAN_PREMIUM_YEARLY
+        sync: false
+      - key: OPENROUTER_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: ADMIN_EMAILS
+        sync: false
