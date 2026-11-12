@@ -1050,7 +1050,7 @@ router.post("/paylo/negotiate/simulate", requireAdmin, (req: Request, res: Respo
         role: "Autonomous PayPal Commerce Agent",
         avatar: "paylo",
         emotion: "thinking",
-        message: `Welcome ${buyerName}! I've analyzed your credentials. An opening discount of ${openingDiscount}% breaches our merchant margin guardrails. However, to establish a long-term partnership, I can immediately authorize **${payloRound1Discount}% off** bringing total to **$${payloRound1Price.toFixed(2)} USD**, plus 3 months of complimentary VIP Priority Support!`,
+        message: `This is a negotiation preview, not a buyer or credit decision. Within the configured demo guardrails, the next proposed price is **$${payloRound1Price.toFixed(2)} USD** (${payloRound1Discount}% off). A merchant must review terms before a real checkout can be prepared.`,
         currentOffer: payloRound1Price,
         discountPercent: payloRound1Discount,
         marginHealth: "HEALTHY",
@@ -1062,7 +1062,7 @@ router.post("/paylo/negotiate/simulate", requireAdmin, (req: Request, res: Respo
         name: buyerName,
         role: buyerRole,
         avatar: buyerAvatar,
-        message: `Counter-proposal noted. While the VIP support adds value, my hard liquidity limit is **$${buyerRound2Price.toFixed(2)} USD** (${buyerRound2Discount}% discount). Can we structure this with **PayPal Pay in 4** interest-free installments, or include an immutable verified digital receipt?`,
+        message: `Preview counter-proposal: **$${buyerRound2Price.toFixed(2)} USD** (${buyerRound2Discount}% discount). Any payment method, installment offer, and receipt availability must be confirmed by PayPal and the merchant during actual checkout.`,
         currentOffer: buyerRound2Price,
         discountPercent: buyerRound2Discount,
         marginHealth: "AGGRESSIVE",
@@ -1075,7 +1075,7 @@ router.post("/paylo/negotiate/simulate", requireAdmin, (req: Request, res: Respo
         role: "Autonomous PayPal Commerce Agent",
         avatar: "paylo",
         emotion: "money_check",
-        message: `Evaluating installment cashflow... Approved! I can match your financial timeline by locking in our **maximum merchant ceiling of ${settledDiscount}% off** for an exact final price of **$${settledPrice.toFixed(2)} USD** (Save $${totalSavings.toFixed(2)})! You may settle via **PayPal Instant Checkout** or **4 bi-weekly payments of $${(settledPrice / 4).toFixed(2)} USD** with zero interest and 100% Buyer Protection!`,
+        message: `Preview guardrail result: **$${settledPrice.toFixed(2)} USD** (${settledDiscount}% off; estimated savings $${totalSavings.toFixed(2)}). This does not approve a transaction. PayPal displays eligible payment methods and final terms only at checkout.`,
         currentOffer: settledPrice,
         discountPercent: settledDiscount,
         marginHealth: "OPTIMIZED",
@@ -1087,7 +1087,7 @@ router.post("/paylo/negotiate/simulate", requireAdmin, (req: Request, res: Respo
         name: buyerName,
         role: buyerRole,
         avatar: buyerAvatar,
-        message: `Consensus reached! Terms meet all procurement parameters: $${settledPrice.toFixed(2)} USD (${settledDiscount}% discount), PayPal Buyer Protection, and instant receipt verification. Please issue the cryptographic PayPal settlement contract.`,
+        message: `Preview terms accepted for merchant review: $${settledPrice.toFixed(2)} USD (${settledDiscount}% discount). This is not a PayPal order, receipt, guarantee, or payment authorization.`,
         currentOffer: settledPrice,
         discountPercent: settledDiscount,
         marginHealth: "OPTIMIZED",
@@ -1100,7 +1100,7 @@ router.post("/paylo/negotiate/simulate", requireAdmin, (req: Request, res: Respo
         role: "Autonomous PayPal Commerce Agent",
         avatar: "paylo",
         emotion: "celebrating",
-        message: `Agreement sealed! Generating PayPal Order Contract **PP-A2A-${Math.floor(Math.random() * 900000 + 100000)}** at **$${settledPrice.toFixed(2)} USD**. Ready for 1-click autonomous execution!`,
+        message: `Negotiation preview complete. A merchant may now review this proposed price and, if enabled, create a real PayPal Sandbox checkout that the buyer must approve.`,
         currentOffer: settledPrice,
         discountPercent: settledDiscount,
         marginHealth: "OPTIMIZED",
@@ -1124,41 +1124,41 @@ router.post("/paylo/negotiate/simulate", requireAdmin, (req: Request, res: Respo
       },
       paymentOptions: [
         {
-          type: "PAYPAL_ONE_CLICK",
-          label: "1-Click Instant PayPal",
+          type: "PAYPAL_CHECKOUT_REVIEW",
+          label: "PayPal checkout review (merchant must create it)",
           amount: settledPrice,
           currency: "USD",
         },
         {
-          type: "PAYPAL_PAY_IN_4",
-          label: "PayPal Pay in 4 (4 payments)",
+          type: "PAYPAL_PAY_LATER_CHECK",
+          label: "Pay Later availability (checked by PayPal at checkout)",
           amountPerInstallment: parseFloat((settledPrice / 4).toFixed(2)),
           currency: "USD",
           schedule: ["Today", "Day 14", "Day 28", "Day 42"],
         },
       ],
       terms: [
-        `Authorized Merchant Discount: ${settledDiscount}% (Voucher: A2A-NEGOTIATED)`,
-        "100% PayPal Buyer Protection Guarantee Included",
-        "Cryptographically Verified Digital Receipt dispatched on settlement",
-        "Immutable Contract ID logged to merchant telemetry feed",
+        `Proposed discount for merchant review: ${settledDiscount}%`,
+        "This simulation does not grant buyer protection or payment-method eligibility.",
+        "A PayPal receipt is created only after an actual approved capture.",
+        "This preview ID is not a PayPal order ID or contract.",
       ],
       signatureHash: `0x${Array.from({ length: 40 }, () => Math.floor(Math.random() * 16).toString(16)).join("")}`,
-      status: "READY_FOR_SETTLEMENT",
+      status: "PREVIEW_REQUIRES_MERCHANT_REVIEW",
       timestamp: new Date().toISOString(),
     };
 
     trackEvent(
       "aitoolshubi-com",
       "dual_agent_negotiation_settled",
-      `Settled ${contractId} with ${buyerName} for $${settledPrice.toFixed(2)} (${settledDiscount}% off)`
+      `Generated negotiation preview ${contractId} for ${buyerName} at $${settledPrice.toFixed(2)} (${settledDiscount}% proposed discount)`
     );
 
     res.json({
       success: true,
       turns,
       agreement,
-      summary: `Successfully completed Autonomous Agent-to-Agent negotiation with ${buyerName}. Settled from $${price.toFixed(2)} down to $${settledPrice.toFixed(2)} USD within authorized guardrails.`,
+      summary: `Generated an agent-to-agent negotiation preview for ${buyerName}: $${price.toFixed(2)} to proposed $${settledPrice.toFixed(2)} USD. The merchant must review it; the buyer must approve any actual PayPal checkout.`,
     });
     return;
   } catch (err: any) {
@@ -1169,7 +1169,7 @@ router.post("/paylo/negotiate/simulate", requireAdmin, (req: Request, res: Respo
 });
 
 // -----------------------------------------------------------------
-// GET /api/paylo/fraud/sentinel — Real-Time Fraud Monitoring Stream
+// GET /api/paylo/fraud/sentinel — clearly labelled dashboard preview dataset
 // -----------------------------------------------------------------
 router.get("/paylo/fraud/sentinel", requireAdmin, (_req: Request, res: Response) => {
   const severities = ["critical", "high", "medium", "low", "safe"] as const;
@@ -1219,7 +1219,13 @@ router.get("/paylo/fraud/sentinel", requireAdmin, (_req: Request, res: Response)
     averageLatency: `${Math.round(Math.random() * 30 + 15)}ms`,
   };
 
-  res.json({ success: true, events, summary });
+  res.json({
+    success: true,
+    simulation: true,
+    dataSource: "Generated dashboard preview — not PayPal Risk, Fraud Protection, or live transaction data.",
+    events,
+    summary,
+  });
 });
 
 // ─── Real-Time Live Commerce Event Store (Disk Persisted) ────────────────────────
